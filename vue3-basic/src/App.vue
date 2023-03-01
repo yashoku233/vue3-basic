@@ -15,7 +15,6 @@
 import { ref, computed, reactive, toRefs, onMounted, onUnmounted, watch } from 'vue';
 import useMousePositions from './hook/useMousePositions'
 import useURLloader from './hook/useLoader'
-import { jsxClosingElement } from '@babel/types';
 
 interface DataProps {
   count: number,
@@ -28,6 +27,12 @@ interface DogResult {
   result: string,
   status: string,
   message: string,
+}
+interface CatResult{
+  url:string,
+  id:string,
+  width:number,
+  height:number,
 }
 export default {
   name: 'App',
@@ -46,10 +51,10 @@ export default {
       greetings.value += 'Hello!'
     }
 
-    const { loaded, loading, result } = useURLloader<DogResult>('https://dog.ceo/api/breeds/image/random');
-      watch(result, () => {
-      if (result.value){
-        console.log(result.value.message)
+    const { loaded, loading, result } = useURLloader<CatResult[]>('https://dog.ceo/api/breeds/image/random');
+    watch(result, () => {
+      if (result.value) {
+        console.log(result.value[0].url)
       }
     })
     const { x, y } = useMousePositions();
