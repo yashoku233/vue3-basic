@@ -8,9 +8,11 @@ function useMousePosition() {
       y.value = e.pageY
     }
     onMounted(() =>{
+      console.log('组件被注册');
       document.addEventListener("click",updateMouse)
     })
     onUnmounted(() =>{
+      console.log('组件被卸载');
       document.removeEventListener('click',updateMouse)
     })
     return {x,y}
