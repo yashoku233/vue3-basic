@@ -1,9 +1,11 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <h1>{{ count }}</h1>
+  <h1>{{ countcopy }}</h1>
   <h1>{{ double }}</h1>
   <h1>X:{{ x }}</h1>
   <h1>Y:{{ y }}</h1>
+  <tranform-demo />
   <suspense>
     <template #default>
       <dog-show />
@@ -25,6 +27,7 @@ import useMousePositions from './hook/useMousePositions'
 import useURLloader from './hook/useLoader'
 import useModel from './components/useModel.vue'
 import dogShow from './components/dogShow.vue'
+import tranformDemo from './components/tranformDemo.vue'
 
 interface DataProps {
   count: number,
@@ -49,11 +52,21 @@ export default {
    components: {
    useModel,
    dogShow,
+   tranformDemo,
   },
   setup() {
     const data: DataProps = reactive({
       count: 0,
       double: computed(() => data.count * 2),
+      increase: () => {
+        data.count++
+      },
+      numbers: [0, 1, 3],
+      person: { name: 'zjw' },
+    })
+    const datacopy = reactive({
+      countcopy: 0,
+      doublecopy: computed(() => data.count * 2),
       increase: () => {
         data.count++
       },
@@ -73,8 +86,10 @@ export default {
     })
     const { x, y } = useMousePositions();
     const refData = toRefs(data);
+    const refDataCopy = toRefs(datacopy);
     return {
       ...refData,
+      ...refDataCopy,
       greetings,
       updateGreeting,
       x,
