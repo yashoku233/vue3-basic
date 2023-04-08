@@ -1,17 +1,20 @@
 <template>
-  
+  <h1>{{result}}</h1>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import Axios from 'axios';
-export default defineComponent({
-    async steup() {
-        
-    }
-})
+<script>
+export default {
+  setup() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          result: 42,
+        });
+      }, 3000);
+    });
+  },
+};
 </script>
 
 <style>
-
 </style>
