@@ -4,7 +4,14 @@
   <h1>{{ double }}</h1>
   <h1>X:{{ x }}</h1>
   <h1>Y:{{ y }}</h1>
-  <use-model/>
+  <suspense>
+    <template #default>
+      <dog-show />
+    </template>
+    <template #fallback>
+      <h1>Loading!....</h1>
+    </template>
+  </suspense>
   <h1 v-if="loading"> </h1>
   <img v-if="loaded" :src="result.message">
   <button @click="increase"> 👍+1</button>
@@ -17,6 +24,7 @@ import { ref, computed, reactive, toRefs, onMounted, onUnmounted, watch } from '
 import useMousePositions from './hook/useMousePositions'
 import useURLloader from './hook/useLoader'
 import useModel from './components/useModel.vue'
+import dogShow from './components/dogShow.vue'
 
 interface DataProps {
   count: number,
@@ -40,6 +48,7 @@ export default {
   name: 'App',
    components: {
    useModel,
+   dogShow,
   },
   setup() {
     const data: DataProps = reactive({
