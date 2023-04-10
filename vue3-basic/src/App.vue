@@ -5,7 +5,6 @@
   <h1>{{ double }}</h1>
   <h1>X:{{ x }}</h1>
   <h1>Y:{{ y }}</h1>
-  <tranform-demo />
   <suspense>
     <template #default>
       <dog-show />
@@ -14,6 +13,9 @@
       <h1>Loading!....</h1>
     </template>
   </suspense>
+  <modal :isOpen="openModal" @close-modal="onModalClose">
+    my modal
+  </modal>
   <h1 v-if="loading"> </h1>
   <img v-if="loaded" :src="result.message">
   <button @click="increase"> 👍+1</button>
@@ -27,7 +29,7 @@ import useMousePositions from './hook/useMousePositions'
 import useURLloader from './hook/useLoader'
 import useModel from './components/useModel.vue'
 import dogShow from './components/dogShow.vue'
-import tranformDemo from './components/tranformDemo.vue'
+import Modal from './components/modal.vue'
 
 interface DataProps {
   count: number,
@@ -52,7 +54,7 @@ export default {
    components: {
    useModel,
    dogShow,
-   tranformDemo,
+   Modal,
   },
   setup() {
     const data: DataProps = reactive({
@@ -77,7 +79,10 @@ export default {
     const updateGreeting = () => {
       greetings.value += 'Hello!'
     }
-
+    const openModal = ref(true);
+    const onModalClose = () =>{
+      openModal.value = false;
+    }
     const { loaded, loading, result } = useURLloader<CatResult[]>('https://dog.ceo/api/breeds/image/random');
     watch(result, () => {
       if (result.value) {
@@ -97,6 +102,8 @@ export default {
       loaded,
       loading,
       result,
+      openModal,
+      onModalClose,
     }
   }
 }
