@@ -14,7 +14,7 @@ export default defineComponent({
   props: {
     isOpen: Boolean,
   },
-  setup(context) {
+  setup(props,context) {
     const buttonClick = () => {
       context.emit('close-modal');
     };
