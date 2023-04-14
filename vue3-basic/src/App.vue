@@ -16,13 +16,15 @@
   <modal :isOpen="openModal" @close-modal="onModalClose">my modal</modal>
   <h1 v-if="loading"></h1>
   <img v-if="loaded" :src="result.message" />
+  <button @click="changeLang('en')">英文</button><br/>
+  <button @click="changeLang('ch')">中文</button><br/>
   <button @click="increase">👍+1</button>
   <button @click="updateGreeting">Updata</button>
 </template>
 
 <script lang="ts">
 /* eslint-disable */
-import { ref, computed, reactive, toRefs, onMounted, onUnmounted, watch } from 'vue';
+import {provide, ref, computed, reactive, toRefs, onMounted, onUnmounted, watch } from 'vue';
 import useMousePositions from './hook/useMousePositions';
 import useURLloader from './hook/useLoader';
 import useModel from './components/useModel.vue';
@@ -55,6 +57,12 @@ export default {
     Modal,
   },
   setup() {
+    // provide 
+    const lang = ref('en')
+    provide('lang', lang);
+    const changeLang =(type:string) =>{
+      lang.value = type
+    }
     const data: DataProps = reactive({
       count: 0,
       double: computed(() => data.count * 2),
@@ -104,6 +112,7 @@ export default {
       result,
       openModal,
       onModalClose,
+      changeLang,
     };
   },
 };

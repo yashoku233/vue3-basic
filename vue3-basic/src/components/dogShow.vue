@@ -4,10 +4,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-
+interface promiseComponent {
+    result:number
+}
 export default defineComponent({
     setup() {
-        return new Promise((resolve) => {
+        return new Promise<promiseComponent>((resolve) => {
             setTimeout(() => {
                 resolve({
                     result: 42
