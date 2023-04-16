@@ -17,11 +17,11 @@ export default defineComponent({
   props: {
     isOpen: Boolean,
   },
-  setup(props,context) {
+  setup(props, {emit}) {
     const lang = inject('lang')
     const currentUser = inject<{name: string}>('currentUser')
     const buttonClick = () => {
-      context.emit('close-modal');
+      emit('close-modal');
     };
     return {
       buttonClick,
